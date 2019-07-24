@@ -1,0 +1,29 @@
+{
+  "name": "podmap.me",
+  "version": "1.0.0",
+  "description": "a little website to help map pods",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/travis/podmap.me.git"
+  },
+  "keywords": [
+    "solid",
+    "tj",
+    "pods"
+  ],
+  "author": "Travis Vachon <travis.vachon@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/travis/podmap.me/issues"
+  },
+  "homepage": "https://github.com/travis/podmap.me#readme",
+  "dependencies": {
+    "next": "^9.0.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+}
