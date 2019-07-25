@@ -4,6 +4,9 @@
   "description": "a little website to help map pods",
   "main": "index.js",
   "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,8 +25,12 @@
   },
   "homepage": "https://github.com/travis/podmap.me#readme",
   "dependencies": {
+    "@inrupt/solid-react-components": "^0.4.3",
+    "@solid/query-ldflex": "^2.5.1",
     "next": "^9.0.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "solid-auth-client": "^2.3.0",
+    "styled-components": "^4.3.2"
   }
 }
