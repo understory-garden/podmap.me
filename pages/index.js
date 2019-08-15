@@ -13,13 +13,14 @@ const StyledCircleInputDiv = styled.div`
 position: relative;
 
 textarea {
-  border: none;
   position: absolute;
   background: transparent;
+  border: none;
+  padding-top: 15px;
   top: 20px;
   width: 80px;
   left: 10px;
-  height: 60px;
+  height: 40px;
   resize: none;
   text-align: center;
   font-size: larger;
