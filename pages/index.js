@@ -9,6 +9,10 @@ import { Form, Text, TextArea } from 'informed';
 const hs = data["https://podmap.me/harmedSupport"]
 const chs = data["https://podmap.me/causedHarmSupport"]
 
+data.context.extend({
+  harmed: "https://podmap.me/harmedSupport"
+})
+
 const StyledCircleInputDiv = styled.div`
 position: relative;
 
@@ -43,38 +47,59 @@ const CircleInput = ({field}) => (
   </StyledCircleInputDiv>
 )
 
+const isValidUrl = (string) => {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
+const PersonDiv = styled.div`
+position: relative;
+
+h3 {
+  position: absolute;
+  background: transparent;
+  top: 20px;
+  width: 80px;
+  left: 10px;
+  text-align: center;
+  font-size: larger;
+}
+`
+
+const Person = ({name}) => (
+  <PersonDiv>
+    <Circle r={50} fill={{color:'white'}} stroke={{color:'black'}} strokeWidth={3}/>
+    <h3>{`${isValidUrl(name) ? useLDflexValue(`[${name}].name`) || '' : name}`}</h3>
+  </PersonDiv>
+)
+
+
 export default () => {
-  const addToby = async () => {
-    console.log("ADDED!", await data.user[hs].add(data["https://tobytoberson.inrupt.net/profile/card#me"]))
-  }
-  const addDad = async () => {
-    console.log("ADDED!", await data.user[hs].add(data["https://r2vachon.solid.community/profile/card#me"]))
-  }
+  const addHarmedSupport = ({name}) => data.user[hs].add(name)
+  const harmedPod = useLDflexList("user.harmed")
+  const profile = useLDflexValue("user")
 
-  const addHarmedSupport = async ({name}) => {
-    console.log("adding ", name)
-    await data.user[hs].add(name)
-    console.log("added ", name)
 
-  }
-
-  const harmedPod = useLDflexList("user")
-
-  return <div>
-           <h1>podmap me</h1>
-           <AuthButton popup="static/popup.html" login="Login here!" logout="Log me out"/>
-           <p>Welcome back, <Value src="user.name"/></p>
-           <List src="user[https://podmap.me/harmedSupport]"/>
-
-           <Form onSubmit={addHarmedSupport}>
-             <Text field="name"/>
-             <button type="submit">can help me if I am harmed</button>
-           </Form>
-
-           <button onClick={addToby}>Add toby</button>
-           <button onClick={addDad}>Add dad</button>
-
-           <CircleInput/>
-
-         </div>;
+  return (
+    <div>
+      <h1>podmap me</h1>
+      <AuthButton popup="static/popup.html" login="Login here!" logout="Log me out"/>
+      <p>
+        Welcome back, <a href={profile}><Value src="user.name"/></a>
+      </p>
+      <Value src="[https://tobytoberson.inrupt.net/profile/card#me].name" />
+      <Form onSubmit={addHarmedSupport}>
+        <Text field="name"/>
+        <button type="submit">can help me if I am harmed</button>
+      </Form>
+      <List src="user[https://podmap.me/harmedSupport].firstName" />
+      {harmedPod.map(user => (
+        <Person key={user} name={user}/>
+      ))}
+    </div>
+  )
 }

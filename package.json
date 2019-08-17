@@ -26,6 +26,7 @@
   "homepage": "https://github.com/travis/podmap.me#readme",
   "dependencies": {
     "@solid/react": "^1.6.0",
+    "@solid/query-ldflex": "^2.6.0",
     "grommet": "^2.7.6",
     "informed": "^2.11.8",
     "next": "^9.0.2",
