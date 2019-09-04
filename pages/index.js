@@ -96,16 +96,15 @@ export default () => {
       <p>
         Welcome back, <a href={profile}><Value src="user.name"/></a>
       </p>
-      <Value src="[https://tobytoberson.inrupt.net/profile/card#me].name" />
       <Form onSubmit={addHarmedSupport}>
         <Text field="name"/>
         <button type="submit">can help me if I am harmed</button>
       </Form>
-    <LiveUpdate>
-      {harmedPod.map(user => (
-        <Person key={user} name={user}/>
-      ))}
-    </LiveUpdate>
+      <LiveUpdate>
+        {harmedPod.map(user => (
+          <Person key={user} name={user}/>
+        ))}
+      </LiveUpdate>
     </div>
   )
 }
