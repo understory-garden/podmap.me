@@ -1,5 +1,5 @@
 import { Circle } from 'react-shapes';
-import { LiveUpdate, AuthButton, Value, List, useLDflexValue, useLDflexList } from '@solid/react';
+import { LiveUpdate, AuthButton, Value, List, useLDflexValue, useLDflexList, useLiveUpdate } from '@solid/react';
 import data from '@solid/query-ldflex';
 import styled from 'styled-components'
 
@@ -68,24 +68,35 @@ h3 {
 `
 
 const Person = ({name}) => {
-  const addHarmedSupport = async ({name}) => {
-    await data.user.harmed.add(name)
+  const deleteHarmedSupport = async () => {
+    await data.user.harmed.delete(name)
   }
 
   return (
-  <PersonDiv>
-    <Circle r={50} fill={{color:'white'}} stroke={{color:'black'}} strokeWidth={3}/>
-    <h3>{`${isValidUrl(name) ? useLDflexValue(`[${name}].name`) || '' : name}`}</h3>
-  </PersonDiv>
-)
-                           }
+    <PersonDiv>
+      <Circle r={50} fill={{color:'white'}} stroke={{color:'black'}} strokeWidth={3}/>
+      <h3>{`${isValidUrl(name) ? useLDflexValue(`[${name}].name`) || '' : name}`}</h3>
+      <button onClick={deleteHarmedSupport}>X</button>
+    </PersonDiv>
+  )
+}
+
+const Pod = ({}) => {
+  const harmedPod = useLDflexList("user.harmed")
+  return (
+    <div>
+      {harmedPod.map(user => (
+        <Person key={user} name={user}/>
+      ))}
+    </div>
+  )
+}
 
 
 export default () => {
   const addHarmedSupport = async ({name}) => {
     await data.user.harmed.add(name)
   }
-  const harmedPod = useLDflexList("user.harmed")
   const profile = useLDflexValue("user")
 
 
@@ -101,9 +112,7 @@ export default () => {
         <button type="submit">can help me if I am harmed</button>
       </Form>
       <LiveUpdate>
-        {harmedPod.map(user => (
-          <Person key={user} name={user}/>
-        ))}
+        <Pod/>
       </LiveUpdate>
     </div>
   )
