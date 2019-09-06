@@ -66,10 +66,16 @@ h3 {
 }
 `
 
+const ProfileLink = ({webid, children}) => (
+  <Link href="/with/[webid]" as={`/with/${encodeURIComponent(webid)}`}>
+    <a>{children}</a>
+  </Link>
+)
+
 const Name = ({webid}) => {
   const name = useLDflexValue(`[${webid}].name`)
   return (
-    <Link href="/with/[webid]" as={`/with/${encodeURIComponent(webid)}`}>{`${name}`}</Link>
+    <ProfileLink webid={webid}>{`${name || ''}`}</ProfileLink>
   )
 }
 
@@ -105,11 +111,13 @@ export default () => {
   }
   const profile = useLDflexValue("user")
 
-
   return (
     <div>
       <h1>podmap me</h1>
-      <AuthButton popup="static/popup.html" login="Login here!" logout="Log me out"/>
+      <nav>
+        <AuthButton popup="static/popup.html" login="Login here!" logout="Log me out"/>
+        <ProfileLink webid={profile}>Profile</ProfileLink>
+      </nav>
       <p>
         Welcome back, <a href={profile}><Value src="user.name"/></a>
       </p>
