@@ -5,10 +5,9 @@ import styled from 'styled-components'
 
 import { Form, Text, TextArea } from 'informed';
 
-data.context.extend({
-  harmed: "https://podmap.me/harmedSupport",
-  causedHarm: "https://podmap.me/causedHarmSupport"
-})
+import Link from 'next/link';
+
+import '../util/init'
 
 const StyledCircleInputDiv = styled.div`
 position: relative;
@@ -67,6 +66,13 @@ h3 {
 }
 `
 
+const Name = ({webid}) => {
+  const name = useLDflexValue(`[${webid}].name`)
+  return (
+    <Link href="/with/[webid]" as={`/with/${encodeURIComponent(webid)}`}>{`${name}`}</Link>
+  )
+}
+
 const Person = ({name}) => {
   const deleteHarmedSupport = async () => {
     await data.user.harmed.delete(name)
@@ -75,7 +81,7 @@ const Person = ({name}) => {
   return (
     <PersonDiv>
       <Circle r={50} fill={{color:'white'}} stroke={{color:'black'}} strokeWidth={3}/>
-      <h3>{`${isValidUrl(name) ? useLDflexValue(`[${name}].name`) || '' : name}`}</h3>
+      <h3>{isValidUrl(name) ? <Name webid={name}/> : name}</h3>
       <button onClick={deleteHarmedSupport}>X</button>
     </PersonDiv>
   )
