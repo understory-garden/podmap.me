@@ -1,49 +1,41 @@
 import {Fragment} from 'react'
 
-import { useLDflexValue, useLDflexList, ActivityButton } from '@solid/react'
+import { useLDflexValue, useLDflexList, LiveUpdate } from '@solid/react'
 import { useRouter } from 'next/router'
 import data from '@solid/query-ldflex';
 import '../../util/init'
-import dynamic from 'next/dynamic'
 
-
-const { as } = data.context;
-
-export function customActivityButton(type, activate, deactivate, deactivateNoChildren) {
-  const activityType = `${as}${type}`;
-  return ({
-    object,
-    children = object ? null : 'this page',
-    activateText = activate,
-    deactivateText = children ? deactivate : deactivateNoChildren,
-    ...props
-  }) =>
-    <ActivityButton {...props}
-                    {...{ activityType, object, children, activateText, deactivateText }} />;
-}
-
-const AddToHarmedPod = dynamic(
-  customActivityButton("Harmed", "Add to harmed pod", "In your harmed pod", "In harmed pod"),
-  {ssr: false}
-)
-
-export default () => {
+const AddToHarmedPod = ({webid}) => {
+  const name = useLDflexValue(`[${webid}].name`)
   const currentUserWebid = useLDflexValue("user")
   const currentUserHarmedPod = useLDflexList("user.harmed")
-  console.log(currentUserHarmedPod)
 
+  const inHarmedPod = currentUserHarmedPod.find(n => n == webid)
+
+  const addHarmedSupport = async () =>
+        await data.user.harmed.add(webid)
+
+  const deleteHarmedSupport = async () =>
+        await data.user.harmed.delete(webid)
+
+  return currentUserHarmedPod && (inHarmedPod ? (
+    <button onClick={deleteHarmedSupport}>remove {`${name}`} from my pod</button>
+  ) : (
+    <button onClick={addHarmedSupport}>add {`${name}`} to my pod </button>
+  ))
+}
+
+export default () => {
   const { webid } = useRouter().query
   const name = useLDflexValue(`[${webid}].name`)
-
-  const addHarmedSupport = async () => {
-    await data.user.harmed.add(webid)
-  }
+  const currentUserWebid = useLDflexValue("user")
 
   return (
     <Fragment>
       <h1>{`${name || ''}`}</h1>
-      <AddToHarmedPod/>
-      <button onClick={addHarmedSupport}>Can support me</button>
+      <LiveUpdate>
+        {name && (currentUserWebid != webid) && <AddToHarmedPod webid={webid}/>}
+      </LiveUpdate>
     </Fragment>
   )
 }
