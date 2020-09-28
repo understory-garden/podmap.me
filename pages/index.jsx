@@ -62,7 +62,7 @@ export default function IndexPage() {
                      className="pod-input"
                      value={podmap && podmap.name || ""}
                      onChange={e => {
-                       setPodmap(pm => ({name: e.target.value, ...pm}))
+                       setPodmap(pm => ({...pm, name: e.target.value}))
                      }}
               />
             </div>
