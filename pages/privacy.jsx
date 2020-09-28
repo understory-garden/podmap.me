@@ -17,7 +17,7 @@ export default function PrivacyPage(){
           all data you create on podmap.me will be stored in a place that you control -
           right now this means we only save data in the local storage of your web
           browser. in the future we will support saving your pod information in a
-          [personal online data store](https://solidproject.org). we do not run
+          &nbsp;<a href="https://solidproject.org">personal online data store</a>. we do not run
           our own data storage servers - this site is static html and javascript
           hosted on <a href="https://vercel.com/">vercel</a>.
         </p>
