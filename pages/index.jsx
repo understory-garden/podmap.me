@@ -50,35 +50,57 @@ function useLocalState(key, initialValue) {
 }
 
 export default function IndexPage() {
-  const [podmap, setPodmap] = useLocalState("https://podmap.me/pods/default", {things: ["", "", "", "", "", ""]})
+  const [podmap, setPodmap] = useLocalState("https://podmap.me/pods/default", {things: [], potentialThings: []})
+  console.log("PM", podmap)
   return (
     <div>
       <Nav />
       <div className="w-screen relative">
-        <div className="w-screen absolute top-0 pointer-events-none">
-          <div className="w-screen absolute top-0 pointer-events-none">
-            <CircleLayout className="m-auto" style={{"--rel": 0.333, "--d": "24vw", "--tan" : 0.5}}>
-              <div className="pod-element border-4 bg-gray-200">
-                <input placeholder="Your name"
-                       value={podmap && podmap.name}
-                       onChange={e => {
-                         setPodmap(pm => ({name: e.target.value, ...pm}))
-                       }}
-                ></input>
-              </div>
-            </CircleLayout>
-          </div>
-          <CircleLayout className="m-auto" style={{"--rel": 0.333, "--d": "24vw", "--tan" : 0.5}}>
+        <div className="pod-container">
+          <CircleLayout className="m-auto" style={{"--rel": 0.333, "--d": "12vw", "--tan" : 0.5}}>
+            <div className="pod-element border-4 bg-gray-200">
+              <input placeholder="Your name"
+                     className="pod-input"
+                     value={podmap && podmap.name || ""}
+                     onChange={e => {
+                       setPodmap(pm => ({name: e.target.value, ...pm}))
+                     }}
+              />
+            </div>
+          </CircleLayout>
+        </div>
+        <div className="pod-container">
+          <CircleLayout className="m-auto" style={{"--rel": 0.333, "--d": "12vw", "--tan" : 0.5}}>
             {[0, 1, 2, 3, 4, 5].map(i => (
               <div className="pod-element" key={i}>
                 <input placeholder="Pod member"
-                       value={podmap && podmap.things[i]}
+                       className="pod-input text-xl"
+                       value={(podmap && podmap.things && podmap.things[i]) || ""}
                        onChange={e => {
                          setPodmap(pm => {
+                           pm.things = pm.things || []
                            pm.things[i] = e.target.value
                            return {...pm}
                          })
-                       }}></input>
+                       }}/>
+              </div>
+            ))}
+          </CircleLayout>
+        </div>
+        <div className="pod-container">
+          <CircleLayout className="m-auto" style={{"--rel": 2, "--d": "9vw", "--tan" : 0.5}}>
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(i => (
+              <div className="pod-element border-dotted" key={i}>
+                <input placeholder="Potential Pod member"
+                       className="pod-input text-sm"
+                       value={(podmap && podmap.potentialThings && podmap.potentialThings[i]) || ""}
+                       onChange={e => {
+                         setPodmap(pm => {
+                           pm.potentialThings = pm.potentialThings || []
+                           pm.potentialThings[i] = e.target.value
+                           return {...pm}
+                         })
+                       }}/>
               </div>
             ))}
           </CircleLayout>
