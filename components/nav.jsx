@@ -14,6 +14,13 @@ export default function Nav() {
             <a className="text-2xl no-underline">podmap.me</a>
           </Link>
         </li>
+        <ul>
+          <li>
+            <Link href="/privacy">
+              <a>privacy</a>
+            </Link>
+          </li>
+        </ul>
       </ul>
     </nav>
   )

@@ -2,6 +2,10 @@
 
 /* Write your own custom base styles here */
 
+a {
+    @apply text-purple-700;
+}
+
 /* Start purging... */
 @tailwind components;
 /* Stop purging. */

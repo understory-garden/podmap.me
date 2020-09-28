@@ -51,7 +51,6 @@ function useLocalState(key, initialValue) {
 
 export default function IndexPage() {
   const [podmap, setPodmap] = useLocalState("https://podmap.me/pods/default", {things: [], potentialThings: []})
-  console.log("PM", podmap)
   return (
     <div>
       <Nav />
