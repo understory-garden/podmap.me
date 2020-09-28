@@ -55,9 +55,9 @@ export default function IndexPage() {
   return (
     <div>
       <Nav />
-      <div className="w-screen relative">
+      <div className="w-screen h-screen relative">
         <div className="pod-container">
-          <CircleLayout className="m-auto" style={{"--rel": 0.333, "--d": "12vw", "--tan" : 0.5}}>
+          <CircleLayout className="m-auto" style={{"--rel": 0.333, "--d": "9rem", "--tan" : 0.5}}>
             <div className="pod-element border-4 bg-gray-200">
               <input placeholder="Your name"
                      className="pod-input"
@@ -70,7 +70,7 @@ export default function IndexPage() {
           </CircleLayout>
         </div>
         <div className="pod-container">
-          <CircleLayout className="m-auto" style={{"--rel": 0.333, "--d": "12vw", "--tan" : 0.5}}>
+          <CircleLayout className="m-auto" style={{"--rel": 0.333, "--d": "9rem", "--tan" : 0.5}}>
             {[0, 1, 2, 3, 4, 5].map(i => (
               <div className="pod-element" key={i}>
                 <input placeholder="Pod member"
@@ -88,16 +88,34 @@ export default function IndexPage() {
           </CircleLayout>
         </div>
         <div className="pod-container">
-          <CircleLayout className="m-auto" style={{"--rel": 2, "--d": "9vw", "--tan" : 0.5}}>
+          <CircleLayout className="m-auto" style={{"--rel": 2.333, "--d": "6rem", "--tan" : 0.5}}>
             {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(i => (
               <div className="pod-element border-dotted" key={i}>
-                <input placeholder="Potential Pod member"
+                <input placeholder="Pod member?"
                        className="pod-input text-sm"
                        value={(podmap && podmap.potentialThings && podmap.potentialThings[i]) || ""}
                        onChange={e => {
                          setPodmap(pm => {
                            pm.potentialThings = pm.potentialThings || []
                            pm.potentialThings[i] = e.target.value
+                           return {...pm}
+                         })
+                       }}/>
+              </div>
+            ))}
+          </CircleLayout>
+        </div>
+        <div className="pod-container">
+          <CircleLayout className="m-auto" style={{"--rel": 1, "--d": "12rem", "--tan" : 0.4}}>
+            {[0, 1, 2, 3, 4, 5].map(i => (
+              <div className={`pod-element  ${((i === 2) || (i === 5)) && 'hidden'}`} key={i}>
+                <input placeholder="Support Org"
+                       className="pod-input"
+                       value={(podmap && podmap.supportOrgs && podmap.supportOrgs[i]) || ""}
+                       onChange={e => {
+                         setPodmap(pm => {
+                           pm.supportOrgs = pm.supportOrgs || []
+                           pm.supportOrgs[i] = e.target.value
                            return {...pm}
                          })
                        }}/>

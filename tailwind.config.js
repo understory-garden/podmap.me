@@ -11,6 +11,11 @@ module.exports = {
       colors: {
         'accent-1': '#333',
       },
+      spacing: {
+        128: '32rem',
+        256: '64rem',
+        288: '72rem'
+      },
     },
   },
   variants: {},
