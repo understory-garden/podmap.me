@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-import { useAuthentication } from 'swrlit'
+import { useAuthentication, useLoggedIn } from 'swrlit'
 
 export default function Nav() {
   const [handle, setHandle] = useState("")
   const [badHandle, setBadHandle] = useState(false)
-  const { loginHandle } = useAuthentication()
+  const { loginHandle, logout } = useAuthentication()
+  const loggedIn = useLoggedIn()
   async function logIn(){
     setBadHandle(false)
     try {
@@ -34,19 +35,27 @@ export default function Nav() {
           </Link>
         </li>
         <ul className="flex justify-between items-center space-x-4">
-          <li className="relative">
-            <input type="text" className="pl-2"
-                   placeholder="what's your handle?"
-                   value={handle} onChange={onChange} onKeyPress={onKeyPress}/>
-            {badHandle && (
-              <p className="text-xs text-red-500 absolute">
-                hm, I don't recognize that handle
-              </p>
-            )}
-          </li>
-          <li>
-            <button onClick={logIn}>log in</button>
-          </li>
+          {loggedIn ? (
+            <li>
+              <button onClick={logout}>log out</button>
+            </li>
+          ) : (
+            <>
+              <li className="relative">
+                <input type="text" className="pl-2"
+                       placeholder="what's your handle?"
+                       value={handle} onChange={onChange} onKeyPress={onKeyPress}/>
+                {badHandle && (
+                  <p className="text-xs text-red-500 absolute">
+                    hm, I don't recognize that handle
+                  </p>
+                )}
+              </li>
+              <li>
+                <button onClick={logIn}>log in</button>
+              </li>
+            </>
+          )}
           <li>
             🌝
           </li>
