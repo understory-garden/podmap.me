@@ -1,6 +1,30 @@
+import { useState } from 'react'
 import Link from 'next/link'
 
+import { useAuthentication } from 'swrlit'
+
 export default function Nav() {
+  const [handle, setHandle] = useState("")
+  const [badHandle, setBadHandle] = useState(false)
+  const { loginHandle } = useAuthentication()
+  async function logIn(){
+    setBadHandle(false)
+    try {
+      await loginHandle(handle);
+    } catch (e) {
+      console.log("error:", e)
+      setBadHandle(true)
+    }
+  }
+  function onChange(e){
+    setHandle(e.target.value)
+    setBadHandle(false)
+  }
+  function onKeyPress(e){
+    if (e.key === "Enter"){
+      logIn()
+    }
+  }
   return (
     <nav>
       <ul className="flex justify-between items-center p-3 mx-3">
@@ -10,6 +34,22 @@ export default function Nav() {
           </Link>
         </li>
         <ul className="flex justify-between items-center space-x-4">
+          <li className="relative">
+            <input type="text" className="pl-2"
+                   placeholder="what's your handle?"
+                   value={handle} onChange={onChange} onKeyPress={onKeyPress}/>
+            {badHandle && (
+              <p className="text-xs text-red-500 absolute">
+                hm, I don't recognize that handle
+              </p>
+            )}
+          </li>
+          <li>
+            <button onClick={logIn}>log in</button>
+          </li>
+          <li>
+            🌝
+          </li>
           <li>
             <a href="https://batjc.wordpress.com/pods-and-pod-mapping-worksheet/" target="_blank" rel="noopener noreferrer">
               instructions
