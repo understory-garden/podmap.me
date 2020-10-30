@@ -90,7 +90,7 @@ export default function IndexPage() {
           <CircleLayout className="m-auto" style={{"--rel": 2.333, "--d": "6rem", "--tan" : 0.5}}>
             {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(i => (
               <div className="pod-element border-dotted" key={i}>
-                <input placeholder="Pod member?"
+                <input placeholder="Movable"
                        className="pod-input text-sm"
                        value={(podmap && podmap.potentialThings && podmap.potentialThings[i]) || ""}
                        onChange={e => {
